@@ -26,7 +26,7 @@ export default function CharacterCard({characterInfo}: Props) {
                     >
                         {propsToDisplay.map((item: CharacterProperty) => (
                             <GridItem colSpan={1}  key={item}>
-                                <Text textTransform={'capitalize'} key={item} pt='2' fontSize='sm'>
+                                <Text textTransform={'capitalize'} key={item} pt='2' fontSize='xs'>
                                     {`${item.replace('_', ' ')}: ${characterInfo[item]}`}
                                 </Text>
                             </GridItem>

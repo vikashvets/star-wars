@@ -1,9 +1,9 @@
 "use client"
 import CharacterCard from "@/app/_components/CharacterCard";
-import {Box, ChakraProvider, Container, Grid, GridItem} from '@chakra-ui/react'
+import {Box, ChakraProvider, Container, Grid, GridItem, Flex} from '@chakra-ui/react'
 import {useEffect, useState} from "react";
 import {getCharacterList} from "@/api/starWarsApi";
-import InfoBannerCard from "@/app/_components/InfoBannerCard";
+import InfoBanner from "@/app/_components/InfoBanner";
 import {Character} from "@/app/_interfaces/Character";
 import {PaginationData} from "@/app/_interfaces/PaginationData";
 import Pagination from "@/app/_components/Pagination";
@@ -37,17 +37,17 @@ export default function Home() {
 
   return (
       <ChakraProvider>
-          <Container maxW="1440px" height={'100vh'}>
+          <InfoBanner/>
+          <Container maxW="1440px">
             <Grid
                 templateRows='repeat(4, 1fr)'
                 templateColumns='repeat(3, 1fr)'
                 gap={5}
                 padding={4}
             >
-              <InfoBannerCard/>
-              {characterList.map((item: Character) => (<GridItem colSpan={1} key={item.name}>
+              {characterList.map((item: Character) => (<Flex key={item.name}>
                 <CharacterCard characterInfo={item}/>
-              </GridItem>
+              </Flex>
               ))}
             </Grid>
           </Container>

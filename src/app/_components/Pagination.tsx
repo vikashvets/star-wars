@@ -30,7 +30,7 @@ export default function Pagination({pagination, onPaginationClick}: Props) {
                 isDisabled={!pagination.previousPageUrl}
                 onClick={() => {onPaginationClick(pagination.previousPageUrl)}}
             />
-            <Text>{`Page ${pagination.currentPage} of ${pagesCount}`}</Text>
+            <Text textAlign='center'>{`Page ${pagination.currentPage} of ${pagesCount}`}</Text>
             <IconButton
                 colorScheme='white'
                 aria-label='Next page'
