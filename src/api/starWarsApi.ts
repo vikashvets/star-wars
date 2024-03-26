@@ -7,4 +7,4 @@ const axiosInstance = axios.create({
   ...(baseURL ? { baseURL } : {}),
 });
 
-export const getCharacterList = () => axiosInstance.get<CharactersResponse>('/people');
+export const getCharacterList = (url?:string | null) => axiosInstance.get<CharactersResponse>(url || '/people');

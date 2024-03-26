@@ -18,7 +18,7 @@ export default function InfoBannerCard() {
                     <Flex flexDirection={'column'}>
                         <Center>
                             <Image
-                                src="star-wars-2.svg"
+                                src="star-wars-logo.svg"
                                 width={100}
                                 height={50}
                                 alt="Star Wars logo"
