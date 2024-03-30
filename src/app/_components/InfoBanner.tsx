@@ -34,7 +34,7 @@ export default function InfoBanner() {
                         </Center>
                         <Center>
                             <Text textAlign='center' fontSize={'md'} paddingTop={6}>
-                                On this page you can learn more about heroes of beloved of many peoples saga. Investigate and have fun!
+                                On this page, you can learn more about heroes of beloved by many peoples saga. Explore and have fun!
                             </Text>
                         </Center>
                     </Flex>

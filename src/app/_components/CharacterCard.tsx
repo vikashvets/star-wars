@@ -4,10 +4,12 @@ import {
     CardBody,
     Heading,
     Text,
-    GridItem, Grid
+    Grid,
+    Flex
 } from '@chakra-ui/react';
 import {Character} from "@/app/_interfaces/Character";
 import {CharacterProperty} from "@/app/_types/CharacterProperty";
+import React from "react";
 
 interface Props  {
     characterInfo: Character
@@ -15,21 +17,26 @@ interface Props  {
 export default function CharacterCard({characterInfo}: Props) {
     const propsToDisplay: Array<CharacterProperty> = ["height", "mass", "hair_color","skin_color", "eye_color", "birth_year", "gender"];
     return (
-        <Card color={'white'} backgroundColor={'black'}>
+        <Card borderRadius={'10px'} border={'1px solid black'}
+        >
             <CardHeader>
                 <Heading size='md'>{characterInfo.name}</Heading>
             </CardHeader>
-            <CardBody>
-                    <Grid
-                        templateColumns='repeat(2, 1fr)'
-                        gap={2}
-                    >
-                        {propsToDisplay.map((item: CharacterProperty) => (
-                            <GridItem colSpan={1}  key={item}>
-                                <Text textTransform={'capitalize'} key={item} pt='2' fontSize='xs'>
-                                    {`${item.replace('_', ' ')}: ${characterInfo[item]}`}
+            <CardBody paddingTop={0} >
+                <Grid
+                    templateColumns={'repeat(auto-fill, minmax(100px, 1fr))'}
+                    gap={2}
+                    padding={2}
+                >
+                {propsToDisplay.map((item: CharacterProperty) => (
+                            <Flex key={item} alignItems={'center'}>
+                                <Text fontWeight={'600'} textTransform={'capitalize'} key={item} pt='2' fontSize='xs'>
+                                    {`${item.replace('_', ' ')}:`}
                                 </Text>
-                            </GridItem>
+                                <Text paddingLeft={1} pt='2' fontSize='xs' fontWeight={'200'}>
+                                    { characterInfo[item]}
+                                </Text>
+                            </Flex>
                         ))}
                     </Grid>
             </CardBody>

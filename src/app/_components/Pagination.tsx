@@ -19,7 +19,7 @@ interface Props  {
 export default function Pagination({pagination, onPaginationClick}: Props) {
     const pagesCount:number = Math.ceil(pagination.totalItems / 10);
 
-    const [inputPage, setInputPage] = useState<string|null>(null);
+    const [inputPage, setInputPage] = useState<number|null>(1);
 
     return (
         <Flex alignItems={'center'} justifyContent={'flex-end'}>
@@ -42,7 +42,7 @@ export default function Pagination({pagination, onPaginationClick}: Props) {
                 defaultValue={1}
                 max={pagesCount}
                 min={1}
-                onChange={(value) => setInputPage(value)}
+                onChange={(value) => setInputPage(+value)}
                 maxWidth={100}
                 colorScheme='white'
             >
