@@ -4,12 +4,13 @@ import {CharacterProperty} from "@/app/_types/CharacterProperty";
 import React from "react";
 
 interface Props  {
-    charactersInfo: Character[]
+    charactersInfo: Character[],
+    onCharacterClick: (character: Character) => void
 }
-export default function CharactersTable({charactersInfo}: Props) {
+export default function CharactersTable({charactersInfo, onCharacterClick}: Props) {
     const propsToDisplay: Array<CharacterProperty> = ["name", "height", "mass", "hair_color","skin_color", "eye_color", "birth_year", "gender"];
     return (
-        <TableContainer marginBottom={100} >
+        <TableContainer marginBottom={100} paddingLeft={8} paddingRight={8} >
             <Table variant='simple' colorScheme={'blackAlpha'}>
                 <Thead>
                     <Tr>
@@ -20,7 +21,7 @@ export default function CharactersTable({charactersInfo}: Props) {
                 </Thead>
                 <Tbody>
                     {charactersInfo.map((character: Character) => (
-                        <Tr key={character.name}>
+                        <Tr key={character.name}  _hover={{ backgroundColor: '#efefef', transition: '.4s', cursor: 'pointer' }} onClick={() => onCharacterClick(character)}>
                             {propsToDisplay.map((item: CharacterProperty) => (
                                 <Td key={item}>{character[item]}</Td>
                             ))}

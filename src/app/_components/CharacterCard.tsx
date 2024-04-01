@@ -12,12 +12,17 @@ import {CharacterProperty} from "@/app/_types/CharacterProperty";
 import React from "react";
 
 interface Props  {
-    characterInfo: Character
+    characterInfo: Character,
+    onCharacterClick: (character: Character) => void
 }
-export default function CharacterCard({characterInfo}: Props) {
+export default function CharacterCard({characterInfo, onCharacterClick}: Props) {
     const propsToDisplay: Array<CharacterProperty> = ["height", "mass", "hair_color","skin_color", "eye_color", "birth_year", "gender"];
     return (
-        <Card borderRadius={'10px'} border={'1px solid black'}
+        <Card
+            borderRadius={'10px'}
+            border={'1px solid black'}
+            _hover={{ backgroundColor: '#efefef', transition: '.4s', cursor: 'pointer', padding: '8px'}}
+            onClick={() => onCharacterClick(characterInfo)}
         >
             <CardHeader>
                 <Heading size='md'>{characterInfo.name}</Heading>
