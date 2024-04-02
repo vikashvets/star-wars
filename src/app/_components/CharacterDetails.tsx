@@ -1,21 +1,23 @@
 import 'reactflow/dist/style.css';
-import { Box } from '@chakra-ui/react';
+import {Box, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay} from '@chakra-ui/react';
 import {Character} from "@/app/_interfaces/Character";
 import React, {useEffect, useState} from "react";
 import {Film} from "@/app/_interfaces/Film";
 import {getFilmsByCharacter, getShipsByFilmsAndPilot} from "@/api/starWarsApi";
-import ReactFlow, {Controls, Background, Edge, Node} from 'reactflow';
+import ReactFlow, {Controls, Background, Edge, Node, useReactFlow} from 'reactflow';
 import {Starship} from "@/app/_interfaces/Starship";
 import {FlowConfig} from "@/app/_interfaces/FlowConfig";
 
 interface Props  {
-    selectedCharacterInfo: Character | null
+    selectedCharacterInfo: Character | null,
+    onClose: () => void
 }
-export default function CharacterDetails({selectedCharacterInfo}: Props) {
+export default function CharacterDetails({selectedCharacterInfo, onClose}: Props) {
     const [films, setFilms] = useState<Film[]>([]);
     const [ships, setShips] = useState<Starship[]>([]);
+    const [flowConfig, setFlowConfig] = useState<FlowConfig | null>(null);
 
-    const [flowConfig, setFlowConfig] = useState<FlowConfig>({nodes: [], edges: []});
+    const reactFlowInstance = useReactFlow();
 
     const getEntityId = (url: string) => {
         const parts =  url.split('/');
@@ -35,6 +37,7 @@ export default function CharacterDetails({selectedCharacterInfo}: Props) {
     }, [selectedCharacterInfo]);
 
     useEffect(() => {
+        setFlowConfig(null);
         if(selectedCharacterInfo) {
             const filmNodes: Node[] = films.map((film, index) => ({
                 id: film.title,
@@ -42,7 +45,7 @@ export default function CharacterDetails({selectedCharacterInfo}: Props) {
                 position: { x: index * 200, y: 200 },
             }));
 
-            const filmEdges: Edge[] = filmNodes.map((node, index) => ({
+            const filmEdges: Edge[] = filmNodes.map((node) => ({
                 id: `${selectedCharacterInfo?.name} - ${node.id}`,
                 source: selectedCharacterInfo?.name,
                 target: node.id
@@ -64,7 +67,7 @@ export default function CharacterDetails({selectedCharacterInfo}: Props) {
             const shipEdges: Edge[] =[];
 
             films.forEach((film) => {
-                ships.forEach((ship, index) => {
+                ships.forEach((ship) => {
                     if(film.starships.includes(getEntityId(ship.url))) {
                         shipEdges.push({
                             id: `${film.title} - ${ship.name}`,
@@ -79,13 +82,27 @@ export default function CharacterDetails({selectedCharacterInfo}: Props) {
         }
     }, [films, selectedCharacterInfo, ships]);
 
+    useEffect(() => {
+        if(flowConfig){
+            reactFlowInstance.fitView();
+        }
+    }, [flowConfig, reactFlowInstance]);
 
     return (
-        <Box height={'100vh'} width={'100%'}>
-            {flowConfig && <ReactFlow nodes={flowConfig.nodes} edges={flowConfig.edges}>
-                <Background/>
-                <Controls/>
-            </ReactFlow>}
-        </Box>
+        <Modal isOpen={!!selectedCharacterInfo} blockScrollOnMount onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent height="80vh" maxW="85vw">
+                <ModalHeader>Characters, filmography and starshipsgraphy</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Box height={'100%'} width={'100%'}>
+                        {flowConfig && <ReactFlow nodes={flowConfig.nodes} edges={flowConfig.edges} fitView>
+                            <Background/>
+                            <Controls/>
+                        </ReactFlow>}
+                    </Box>
+                </ModalBody>
+                </ModalContent>
+        </Modal>
     );
 }

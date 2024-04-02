@@ -1,6 +1,7 @@
 "use client"
 import {Box, ChakraProvider, Container, Text} from '@chakra-ui/react'
 import React, {useEffect, useState} from "react";
+import {ReactFlowProvider} from "reactflow";
 import {getCharacterList} from "@/api/starWarsApi";
 import InfoBanner from "@/app/_components/InfoBanner";
 import {Character} from "@/app/_interfaces/Character";
@@ -43,15 +44,25 @@ export default function Home() {
 
   return (
       <ChakraProvider>
-          <InfoBanner/>
-          <Container maxW="1440px">
-              <Text align={'center'} marginBottom={50} marginTop={50} fontWeight={'600'} size={'5xl'} >Heroes of Star Wars saga and their characteristics</Text>
-              <CharacterList onCharacterClick={onCharacterClick} charactersInfo={characterList} />
-          </Container>
-          <CharacterDetails selectedCharacterInfo={selectedCharacter}></CharacterDetails>
-          <Box bg='#292e2b' w='100%' p={4} color='white'>
-              <Pagination pagination={pagination} onPaginationClick={onPaginationClick}></Pagination>
-          </Box>
+          <ReactFlowProvider>
+              <InfoBanner/>
+              <Container maxW="1440px">
+                  <Text align={'center'} marginBottom={50} marginTop={50} fontWeight={'600'} size={'5xl'} >
+                      Heroes of Star Wars saga and their characteristics
+                  </Text>
+                  <CharacterList onCharacterClick={onCharacterClick} charactersInfo={characterList} />
+              </Container>
+              <CharacterDetails
+                  selectedCharacterInfo={selectedCharacter}
+                  onClose={() => setSelectedCharacter(null)}
+              />
+              <Box bg='#292e2b' w='100%' p={4} color='white'>
+                  <Pagination
+                      pagination={pagination}
+                      onPaginationClick={onPaginationClick
+                  }/>
+              </Box>
+          </ReactFlowProvider>
       </ChakraProvider>
   );
 }
