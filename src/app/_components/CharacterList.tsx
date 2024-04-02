@@ -32,6 +32,7 @@ export default function CharacterList({charactersInfo, onCharacterClick}: Props)
             border={'1px solid black'}
             _hover={hoverStyle}
             onClick={() => onCharacterClick(characterInfo)}
+            data-testid={'character-card'}
         >
             <CardHeader>
                 <Heading size='md'>{characterInfo.name}</Heading>
@@ -74,8 +75,6 @@ export default function CharacterList({charactersInfo, onCharacterClick}: Props)
                         ))}
                     </Tr>
                 ))}
-                <Tr>
-                </Tr>
             </Tbody>
         </Table>
     </TableContainer>;

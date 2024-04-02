@@ -56,7 +56,7 @@ export default function Home() {
                   selectedCharacterInfo={selectedCharacter}
                   onClose={() => setSelectedCharacter(null)}
               />
-              <Box bg='#292e2b' w='100%' p={4} color='white'>
+              <Box bg='#292e2b' w='100%' p={4} paddingBottom={0} color='white'>
                   <Pagination
                       pagination={pagination}
                       onPaginationClick={onPaginationClick
