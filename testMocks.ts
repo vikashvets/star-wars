@@ -1,10 +1,4 @@
-import {render, screen, waitFor} from "@testing-library/react";
-import CharacterDetails from "@/app/_components/CharacterDetails";
-import {getShipsByFilmsAndPilot, getFilmsByCharacter} from "@/api/starWarsApi";
-import {ReactFlowProvider} from "reactflow";
-import {mockReactFlow} from "../../reactFlowTest.setup";
-
-const filmsMock =  [
+export const filmsMock =  [
     {
         "title": "A New Hope",
         "episode_id": 4,
@@ -504,7 +498,7 @@ const filmsMock =  [
         "url": "https://sw-api.starnavi.io/films/6/"
     }
 ];
-const shipsMock =  [
+export const shipsMock =  [
     {
         "name": "Jedi starfighter",
         "model": "Delta-7 Aethersprite-class interceptor",
@@ -632,102 +626,93 @@ const shipsMock =  [
         "url": "https://sw-api.starnavi.io/starships/74/"
     }
 ];
-
-jest.mock("../api/starWarsApi", () => {
-    return {
-        __esModule: true,
-        getFilmsByCharacter: jest.fn(() => Promise.resolve({data: {results: filmsMock}})),
-        getShipsByFilmsAndPilot: jest.fn(() => Promise.resolve({data: {results: shipsMock}})),
-    };
-});
-describe("CharacterDetails", () => {
-    beforeEach(() => {
-        mockReactFlow()
-    });
-
-    const selectedCharacter = {
-            "name": "Obi-Wan Kenobi",
-            "height": "182",
-            "mass": "77",
-            "hair_color": "auburn, white",
-            "skin_color": "fair",
-            "eye_color": "blue-gray",
-            "birth_year": "57BBY",
-            "gender": "male",
-            "homeworld": 20,
-            "films": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6
-            ],
-            "species": [
-                1
-            ],
-            "vehicles": [
-                38
-            ],
-            "starships": [
-                48,
-                59,
-                64,
-                65,
-                74
-            ],
-            "created": "2014-12-10T16:16:29.192000Z",
-            "edited": "2014-12-20T21:17:50.325000Z",
-            "url": "https://sw-api.starnavi.io/people/10/"
-        };
-
-    const renderCharacterDetails = () => render(<ReactFlowProvider>
-        <CharacterDetails selectedCharacterInfo={selectedCharacter} onClose={jest.fn}/>
-    </ReactFlowProvider>);
-
-    it("should render character details, react flow nodes and edges", async () => {
-        renderCharacterDetails();
-
-        await waitFor(() => {
-            const characterName = screen.getByText("Obi-Wan Kenobi");
-            expect(characterName).toBeTruthy();
-
-            filmsMock.forEach(film => {
-                expect(screen.getByText(film.title)).toBeTruthy();
-            });
-
-            shipsMock.forEach(ship => {
-                expect(screen.getByText(ship.name)).toBeTruthy();
-            });
-
-            const edges = [
-                'rf__edge-Obi-Wan Kenobi - A New Hope',
-                'rf__edge-Obi-Wan Kenobi - The Empire Strikes Back',
-                'rf__edge-Obi-Wan Kenobi - Return of the Jedi',
-                'rf__edge-Obi-Wan Kenobi - The Phantom Menace',
-                'rf__edge-Obi-Wan Kenobi - Attack of the Clones',
-                'rf__edge-Obi-Wan Kenobi - Revenge of the Sith',
-
-                'rf__edge-Revenge of the Sith - Jedi starfighter',
-                'rf__edge-Revenge of the Sith - Trade Federation cruiser',
-                'rf__edge-Revenge of the Sith - Naboo star skiff',
-                'rf__edge-Revenge of the Sith - Jedi Interceptor',
-                'rf__edge-Revenge of the Sith - Belbullab-22 starfighter',
-
-                'rf__edge-Attack of the Clones - Jedi starfighter',
-            ];
-
-            edges.forEach(edge => {
-                expect(screen.getByTestId(edge)).toBeTruthy();
-            });
-        });
-    });
-
-    it("should call getFilmsByCharacter and getShipsByFilmsAndPilot api", async () => {
-        renderCharacterDetails();
-        await waitFor(() =>{
-            expect(getFilmsByCharacter).toHaveBeenCalledWith(10);
-            expect(getShipsByFilmsAndPilot).toHaveBeenCalledWith([1, 2, 3, 4, 5, 6], 10);
-        });
-    });
-});
+export const charactersMock = [
+    {
+        "name": "Obi-Wan Kenobi",
+        "height": "182",
+        "mass": "77",
+        "hair_color": "auburn, white",
+        "skin_color": "fair",
+        "eye_color": "blue-gray",
+        "birth_year": "57BBY",
+        "gender": "male",
+        "homeworld": 20,
+        "films": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ],
+        "species": [
+            1
+        ],
+        "vehicles": [
+            38
+        ],
+        "starships": [
+            48,
+            59,
+            64,
+            65,
+            74
+        ],
+        "created": "2014-12-10T16:16:29.192000Z",
+        "edited": "2014-12-20T21:17:50.325000Z",
+        "url": "https://sw-api.starnavi.io/people/10/"
+    },
+    {
+        "name": "Wilhuff Tarkin",
+        "height": "180",
+        "mass": "unknown",
+        "hair_color": "auburn, grey",
+        "skin_color": "fair",
+        "eye_color": "blue",
+        "birth_year": "64BBY",
+        "gender": "male",
+        "homeworld": 21,
+        "films": [
+            1,
+            6
+        ],
+        "species": [
+            1
+        ],
+        "vehicles": [],
+        "starships": [],
+        "created": "2014-12-10T16:26:56.138000Z",
+        "edited": "2014-12-20T21:17:50.330000Z",
+        "url": "https://sw-api.starnavi.io/people/12/"
+    },
+    {
+        "name": "Chewbacca",
+        "height": "228",
+        "mass": "112",
+        "hair_color": "brown",
+        "skin_color": "unknown",
+        "eye_color": "blue",
+        "birth_year": "200BBY",
+        "gender": "male",
+        "homeworld": 14,
+        "films": [
+            1,
+            2,
+            3,
+            6
+        ],
+        "species": [
+            3
+        ],
+        "vehicles": [
+            19
+        ],
+        "starships": [
+            10,
+            22
+        ],
+        "created": "2014-12-10T16:42:45.066000Z",
+        "edited": "2014-12-20T21:17:50.332000Z",
+        "url": "https://sw-api.starnavi.io/people/13/"
+    },
+];

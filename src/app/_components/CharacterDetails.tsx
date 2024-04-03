@@ -7,6 +7,7 @@ import {getFilmsByCharacter, getShipsByFilmsAndPilot} from "@/api/starWarsApi";
 import ReactFlow, {Controls, Background, Edge, Node, useReactFlow} from 'reactflow';
 import {Starship} from "@/app/_interfaces/Starship";
 import {FlowConfig} from "@/app/_interfaces/FlowConfig";
+import getEntityId from "@/utils/getEntityId";
 
 interface Props  {
     selectedCharacterInfo: Character | null,
@@ -18,11 +19,6 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
     const [flowConfig, setFlowConfig] = useState<FlowConfig | null>(null);
 
     const reactFlowInstance = useReactFlow();
-
-    const getEntityId = (url: string) => {
-        const parts =  url.split('/');
-        return parseInt(parts[parts.length - 2]);
-    }
 
     useEffect(() => {
         if(selectedCharacterInfo) {

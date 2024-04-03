@@ -5,7 +5,16 @@ import {
     Heading,
     Text,
     Grid,
-    Flex, useMediaQuery, TableContainer, Table, Thead, Tr, Th, Tbody, Td
+    Flex,
+    useMediaQuery,
+    TableContainer,
+    Table,
+    Thead,
+    Tr,
+    Th,
+    Tbody,
+    Td,
+    Container
 } from '@chakra-ui/react';
 import {Character} from "@/app/_interfaces/Character";
 import {CharacterProperty} from "@/app/_types/CharacterProperty";
@@ -80,5 +89,12 @@ export default function CharacterList({charactersInfo, onCharacterClick}: Props)
     </TableContainer>;
 
 
-    return (mobileView ? characterTile : characterTable);
+    return (
+        <Container maxW="1440px">
+            <Text align={'center'} marginBottom={50} marginTop={50} fontWeight={'600'} size={'5xl'}>
+                Heroes of Star Wars saga and their characteristics
+            </Text>
+            {mobileView ? characterTile : characterTable}
+        </Container>
+    );
 }

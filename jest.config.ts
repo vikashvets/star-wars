@@ -23,6 +23,10 @@ const config: Config = {
     '!<rootDir>/coverage/**',
     '!<rootDir>/src/app/_interfaces/**',
     '!<rootDir>/src/app/_types/**',
+    '!<rootDir>/testMocks.ts',
+    '!<rootDir>/testMocks.ts',
+    '!<rootDir>/src/app/page.tsx',
+    '!<rootDir>/src/app/layout.tsx',
   ],
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
