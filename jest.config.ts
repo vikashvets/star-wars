@@ -11,6 +11,7 @@ const config: Config = {
   collectCoverage: true,
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/**/*.test.[tj]s?(x)'],
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
@@ -23,8 +24,7 @@ const config: Config = {
     '!<rootDir>/coverage/**',
     '!<rootDir>/src/app/_interfaces/**',
     '!<rootDir>/src/app/_types/**',
-    '!<rootDir>/testMocks.ts',
-    '!<rootDir>/testMocks.ts',
+    '!<rootDir>/src/__tests__/**',
     '!<rootDir>/src/app/page.tsx',
     '!<rootDir>/src/app/layout.tsx',
   ],

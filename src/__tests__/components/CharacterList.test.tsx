@@ -1,7 +1,7 @@
 import {render, screen} from "@testing-library/react";
 import CharacterList from "@/app/_components/CharacterList";
 import {useMediaQuery} from "@chakra-ui/react";
-import {charactersMock} from "../../../testMocks";
+import {charactersMock} from "../testMocks";
 jest.mock("@chakra-ui/react", () => {
     const originalModule = jest.requireActual("@chakra-ui/react");
     return {

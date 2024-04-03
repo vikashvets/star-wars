@@ -1,9 +1,9 @@
 import {render, screen, waitFor} from "@testing-library/react";
 import {getCharacterList} from "@/api/starWarsApi";
 import {ReactFlowProvider} from "reactflow";
-import {mockReactFlow} from "../../../reactFlowTest.setup";
+import {mockReactFlow} from "../reactFlowTest.setup";
 import Home from "@/app/_components/Home";
-import {charactersMock, filmsMock, shipsMock} from "../../../testMocks";
+import {charactersMock, filmsMock, shipsMock} from "../testMocks";
 jest.mock("../../api/starWarsApi", () => {
     return {
         __esModule: true,

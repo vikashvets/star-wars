@@ -2,8 +2,8 @@ import {render, screen, waitFor} from "@testing-library/react";
 import CharacterDetails from "@/app/_components/CharacterDetails";
 import {getShipsByFilmsAndPilot, getFilmsByCharacter} from "@/api/starWarsApi";
 import {ReactFlowProvider} from "reactflow";
-import {mockReactFlow} from "../../../reactFlowTest.setup";
-import {charactersMock, filmsMock, shipsMock} from "../../../testMocks";
+import {mockReactFlow} from "../reactFlowTest.setup";
+import {charactersMock, filmsMock, shipsMock} from "../testMocks";
 
 jest.mock("../../api/starWarsApi", () => {
     return {
