@@ -78,11 +78,7 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
         }
     }, [films, selectedCharacterInfo, ships]);
 
-    useEffect(() => {
-        if(flowConfig){
-            reactFlowInstance.fitView();
-        }
-    }, [flowConfig, reactFlowInstance]);
+    const onNodesAndEdgesChange = () => {reactFlowInstance.fitView()};
 
     return (
         <Modal isOpen={!!selectedCharacterInfo} onClose={onClose} blockScrollOnMount preserveScrollBarGap>
@@ -92,7 +88,12 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
                 <ModalCloseButton />
                 <ModalBody>
                     <Box height={'100%'} width={'100%'}>
-                        {flowConfig && <ReactFlow nodes={flowConfig.nodes} edges={flowConfig.edges} fitView>
+                        {flowConfig && <ReactFlow
+                            nodes={flowConfig.nodes}
+                            edges={flowConfig.edges}
+                            fitView
+                            onEdgesChange={onNodesAndEdgesChange}
+                            onNodesChange={onNodesAndEdgesChange}>
                             <Background/>
                             <Controls/>
                         </ReactFlow>}
