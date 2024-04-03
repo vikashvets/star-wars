@@ -1,4 +1,3 @@
-
 export interface PaginationData {
     totalItems: number,
     nextPageUrl?: string | null,
