@@ -18,7 +18,7 @@ interface Props  {
     onPaginationClick: (url?: string | null) => void
 }
 export default function Pagination({pagination, onPaginationClick}: Props) {
-    const pagesCount:number = Math.ceil(pagination.totalItems / 10);
+    const pagesCount: number = Math.ceil(pagination.totalItems / 10);
 
     const [inputPage, setInputPage] = useState<number|null>(1);
 

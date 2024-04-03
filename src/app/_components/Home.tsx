@@ -1,5 +1,4 @@
-"use client"
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {getCharacterList} from "@/api/starWarsApi";
 import InfoBanner from "@/app/_components/InfoBanner";
 import {Character} from "@/app/_interfaces/Character";
@@ -24,11 +23,7 @@ export default function Home() {
         currentPage: 1
     });
 
-    useEffect(() => {
-        onPaginationClick();
-    }, []);
-
-    const onPaginationClick = (url?: string | null) => {
+    const onPaginationClick = useCallback((url?: string | null) => {
         getCharacterList(url).then((res) => {
             setCharacterList(res.data.results);
             const currentPage = getCurrentPageFromUrl(url);
@@ -39,7 +34,11 @@ export default function Home() {
                 currentPage: currentPage
             });
         })
-    }
+    }, []);
+
+    useEffect(() => {
+        onPaginationClick();
+    }, [onPaginationClick]);
 
     return (
         <>

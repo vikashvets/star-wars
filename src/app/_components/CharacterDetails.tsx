@@ -1,7 +1,7 @@
 import 'reactflow/dist/style.css';
 import {Box, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay} from '@chakra-ui/react';
 import {Character} from "@/app/_interfaces/Character";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Film} from "@/app/_interfaces/Film";
 import {getFilmsByCharacter, getShipsByFilmsAndPilot} from "@/api/starWarsApi";
 import ReactFlow, {Controls, Background, Edge, Node, useReactFlow} from 'reactflow';
@@ -16,24 +16,24 @@ interface Props  {
 export default function CharacterDetails({selectedCharacterInfo, onClose}: Props) {
     const [films, setFilms] = useState<Film[]>([]);
     const [ships, setShips] = useState<Starship[]>([]);
-    const [flowConfig, setFlowConfig] = useState<FlowConfig | null>(null);
 
     const reactFlowInstance = useReactFlow();
 
     useEffect(() => {
         if(selectedCharacterInfo) {
             const characterId = getEntityId(selectedCharacterInfo.url);
-            getFilmsByCharacter(characterId).then((filmResult) => {
-                setFilms(filmResult.data.results);
+            getFilmsByCharacter(characterId)
+                .then((filmResult) => {
+                    setFilms(filmResult.data.results);
             });
-            getShipsByFilmsAndPilot(selectedCharacterInfo.films, characterId).then((shipResult) => {
-                setShips(shipResult.data.results);
+            getShipsByFilmsAndPilot(selectedCharacterInfo.films, characterId)
+                .then((shipResult) => {
+                    setShips(shipResult.data.results);
             });
         }
     }, [selectedCharacterInfo]);
 
-    useEffect(() => {
-        setFlowConfig(null);
+    const flowConfig = useMemo<FlowConfig | null>(() => {
         if(selectedCharacterInfo) {
             const filmNodes: Node[] = films.map((film, index) => ({
                 id: film.title,
@@ -60,7 +60,7 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
                 position: { x: index * 200, y: 500 },
             }));
 
-            const shipEdges: Edge[] =[];
+            const shipEdges: Edge[] = [];
 
             films.forEach((film) => {
                 ships.forEach((ship) => {
@@ -74,11 +74,13 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
                 });
             });
 
-            setFlowConfig({nodes: [characterNode, ...filmNodes, ...shipNodes], edges: [...filmEdges, ...shipEdges]});
+            return ({nodes: [characterNode, ...filmNodes, ...shipNodes], edges: [...filmEdges, ...shipEdges]})
         }
+        else return null;
+
     }, [films, selectedCharacterInfo, ships]);
 
-    const onNodesAndEdgesChange = () => {reactFlowInstance.fitView()};
+    const onNodesAndEdgesChange = useCallback(() => { reactFlowInstance.fitView() }, [reactFlowInstance]);
 
     return (
         <Modal isOpen={!!selectedCharacterInfo} onClose={onClose} blockScrollOnMount preserveScrollBarGap>
