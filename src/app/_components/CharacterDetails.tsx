@@ -85,7 +85,7 @@ export default function CharacterDetails({selectedCharacterInfo, onClose}: Props
     }, [flowConfig, reactFlowInstance]);
 
     return (
-        <Modal isOpen={!!selectedCharacterInfo} blockScrollOnMount onClose={onClose}>
+        <Modal isOpen={!!selectedCharacterInfo} onClose={onClose} blockScrollOnMount preserveScrollBarGap>
             <ModalOverlay />
             <ModalContent height="80vh" maxW="85vw">
                 <ModalHeader>Characters, filmography and starshipsgraphy</ModalHeader>
